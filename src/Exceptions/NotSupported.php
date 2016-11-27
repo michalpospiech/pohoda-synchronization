@@ -1,6 +1,6 @@
 <?php
 /**
- * PohodaException.php
+ * NotSupported.php
  *
  * @author Michal Pospiech <michal@pospiech.cz>
  */
@@ -8,7 +8,7 @@
 namespace MPospiech\PohodaSynchronization\Exceptions;
 
 
-class PohodaException extends \Exception
+class NotSupported extends PohodaException
 {
 
 }
