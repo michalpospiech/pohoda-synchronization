@@ -29,6 +29,7 @@ class Order extends Entity
 
 	use Traits\PaymentTypes;
 	use Traits\OrderTypes;
+	use Traits\RoundingDocumentTypes;
 
 	/** @var string */
 	protected $id;
@@ -47,9 +48,6 @@ class Order extends Entity
 
 	/** @var string */
 	protected $text;
-
-	/** @var string */
-	protected $roundingDocument;
 
 	/** @var float */
 	protected $discountPercentage;
@@ -128,6 +126,13 @@ class Order extends Entity
 		foreach ($this->getItems() as $item) {
 			$detail->appendChild($xml->importNode($item->getXMLElement(), true));
 		}
+
+		// zakonceni objednavky - summary
+		$summary = $xml->createElement('ord:summary');
+		$roundingDocument = $xml->createElement('ord:roundingDocument');
+		$roundingDocument->appendChild($xml->createTextNode($this->getValue('roundingDocument')));
+		$summary->appendChild($roundingDocument);
+		$order->appendChild($summary);
 
 		return $dataPackItem;
 	}
