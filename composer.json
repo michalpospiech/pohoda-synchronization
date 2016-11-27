@@ -1,0 +1,34 @@
+{
+  "name": "mpospiech/pohoda-synchronization",
+  "type": "library",
+  "description": "XML parser and generator for software Stormware Pohoda",
+  "keywords": ["xml", "parser", "generator", "stormware", "pohoda", "stormware pohoda"],
+  "license": "MIT",
+  "support":{
+    "issues": "https://github.com/michalpospiech/pohoda-synchronization/issues"
+  },
+  "authors": [
+    {
+      "name": "Michal Pospiech",
+      "email": "michal@pospiech.cz"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "MPospiech\\PohodaSynchronization\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MPospiech\\PohodaSynchronization\\": "tests/"
+    }
+  },
+  "require": {
+    "php": ">= 5.4",
+    "nette/utils": "^2.2"
+  },
+  "require-dev": {
+    "nette/tester": "~1.7.1",
+    "tracy/tracy": "^2.2"
+  }
+}
