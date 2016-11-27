@@ -1,1 +1,1 @@
-# pohoda-xml-generator
+# pohoda-synchronization
