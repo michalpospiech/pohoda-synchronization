@@ -136,6 +136,7 @@ class Address extends Entity
 	 *
 	 * @param string $email
 	 * @param bool $force
+	 * @return $this
 	 * @throws Exceptions\UnvalidValue
 	 */
 	public function setEmail($email, $force = false)
@@ -145,6 +146,8 @@ class Address extends Entity
 		}
 
 		$this->email = $email;
+
+		return $this;
 	}
 
 	public function getXMLElement()
