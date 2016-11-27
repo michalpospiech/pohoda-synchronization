@@ -96,8 +96,12 @@ class Pohoda
 	{
 		$xml = $this->domDocument;
 
-		$dat = $xml->createElementNS(self::$namespaces['dat'], 'dat:dataPack');
+		$dat = $xml->createElement('dat:dataPack');
 		$xml->appendChild($dat);
+
+		foreach (self::$namespaces as $key => $url) {
+			$dat->setAttribute(sprintf('xmlns:%s', $key), $url);
+		}
 
 		$dat->setAttribute('id', $this->getId());
 		$dat->setAttribute('ico', $this->getIco());

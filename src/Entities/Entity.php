@@ -101,8 +101,10 @@ abstract class Entity
 		} else if ($type && $type === 'add') {
 			if (property_exists($this, $property . 's')) {
 				$property = $property . 's';
+			} else if (property_exists($this, $property . 'es')) {
+				$property = $property . 'es';
 			} else {
-				throw new Exceptions\OutOfRange(sprintf('Unkown property by method %ss', $name));
+				throw new Exceptions\OutOfRange(sprintf('Unkown property by method %s', $name));
 			}
 
 			if (!is_array($this->$property)) {

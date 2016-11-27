@@ -71,6 +71,19 @@ class Order extends Entity
 	}
 
 	/**
+	 * Prida adresu do entity PartnerIdentity
+	 *
+	 * @param Address $address
+	 * @return self
+	 */
+	public function addAddress(Address $address)
+	{
+		$this->partnerIdentity->addAddress($address);
+
+		return $this;
+	}
+
+	/**
 	 * Vrati pripraveny dataPackItem
 	 *
 	 * @return \DOMElement
@@ -106,9 +119,7 @@ class Order extends Entity
 		}
 
 		// dodavatel/odberatel
-		$partnerIdentity = $xml->createElement('ord:partnerIdentity');
-		$partnerIdentity->appendChild($xml->importNode($this->getPartnerIdentity()->getXMLElement(), true));
-		$header->appendChild($partnerIdentity);
+		$header->appendChild($xml->importNode($this->getPartnerIdentity()->getXMLElement(), true));
 
 		// typ uhrady
 		$paymentType = $xml->createElement('ord:paymentType');

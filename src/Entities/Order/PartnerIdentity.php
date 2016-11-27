@@ -10,81 +10,29 @@ namespace MPospiech\PohodaSynchronization\Entities\Order;
 
 use MPospiech\PohodaSynchronization\Entities\Entity;
 use MPospiech\PohodaSynchronization\Pohoda;
-use Nette\Utils\Strings;
 
 /**
- * @method PartnerIdentity setCompany(string $company)
- * @method PartnerIdentity setDivision(string $division)
- * @method PartnerIdentity setName(string $name)
- * @method PartnerIdentity setCity(string $city)
- * @method PartnerIdentity setStreet(string $street)
- * @method PartnerIdentity setIco(string $ico)
- * @method PartnerIdentity setDic(string $dic)
+ * @method PartnerIdentity addAddress(Address $address)
  */
 class PartnerIdentity extends Entity
 {
 
-	/** @var string */
-	protected $company;
-
-	/** @var string */
-	protected $division;
-
-	/** @var string */
-	protected $name;
-
-	/** @var string */
-	protected $city;
-
-	/** @var string */
-	protected $street;
-
-	/** @var int */
-	protected $zip;
-
-	/** @var string */
-	protected $ico;
-
-	/** @var string */
-	protected $dic;
-
-	/**
-	 * @param string|int $zip
-	 * @return PartnerIdentity
-	 */
-	public function setZip($zip)
-	{
-		if (is_int($zip)) {
-			$this->zip = $zip;
-			return $this;
-		}
-
-		$zip = Strings::replace($zip, '~\s+~', '');
-		$this->zip = $zip;
-
-		return $this;
-	}
+	/** @var array */
+	protected $addresses = [];
 
 	public function getXMLElement()
 	{
 		$xml = new \DOMDocument('1.0', Pohoda::XML_ENCODING);
 
-		$address = $xml->createElementNS($this->getXmlNamespace('typ'), 'typ:address');
-		$xml->appendChild($address);
+		$partnerIdentity = $xml->createElementNS($this->getXmlNamespace('ord'), 'ord:partnerIdentity');
+		$xml->appendChild($partnerIdentity);
 
-		$elements = ['company', 'division', 'name', 'city', 'street', 'zip', 'ico', 'dic'];
-		foreach ($elements as $element) {
-			$value = $this->getValue($element);
-			if (!$value) {
-				continue;
-			}
-
-			$el = $xml->createElementNS($this->getXmlNamespace('typ'), sprintf('typ:%s', $element));
-			$el->appendChild($xml->createTextNode($value));
-			$address->appendChild($el);
+		/** @var Address $address */
+		foreach ($this->addresses as $address) {
+			$partnerIdentity->appendChild($xml->importNode($address->getXMLElement(), true));
 		}
 
-		return $address;
+		return $partnerIdentity;
 	}
 
 }
