@@ -14,7 +14,7 @@ trait RateVatTypes
 {
 
 	/** @var string */
-	protected $rateVat = 'none';
+	protected $rateVAT = 'none';
 
 	/** @var array */
 	private static $rateVatTypes = [
@@ -49,13 +49,13 @@ trait RateVatTypes
 	 * @return self
 	 * @throws OutOfRange
 	 */
-	public function setRateVat($rateVat)
+	public function setRateVAT($rateVat)
 	{
 		if (!in_array($rateVat, self::getRateVatTypes(false))) {
 			throw new OutOfRange(sprintf('Unkown rate vat type %s', $rateVat));
 		}
 
-		$this->rateVat = $rateVat;
+		$this->rateVAT = $rateVat;
 
 		return $this;
 	}
