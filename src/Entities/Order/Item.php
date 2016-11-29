@@ -70,7 +70,7 @@ class Item extends Entity
 
 	const CURRENCY_UNIT = 'unitPrice';
 	const CURRENCY_PRICE = 'price';
-	const CURRENCY_PRICE_VAT = 'priceVat';
+	const CURRENCY_PRICE_VAT = 'priceVAT';
 	const CURRENCY_PRICE_SUM = 'priceSum';
 
 	/**
