@@ -102,7 +102,7 @@ class Order extends Entity
 		$dataPackItem->appendChild($order);
 
 		// ----- hlavicka -----
-		$header = $xml->createElementNS($this->getXmlNamespace('ord'), 'ord:header');
+		$header = $xml->createElementNS($this->getXmlNamespace('ord'), 'ord:orderHeader');
 		$order->appendChild($header);
 
 		// zakladni elementy
@@ -139,7 +139,7 @@ class Order extends Entity
 		}
 
 		// zakonceni objednavky - summary
-		$summary = $xml->createElement('ord:summary');
+		$summary = $xml->createElement('ord:orderSummary');
 		$roundingDocument = $xml->createElement('ord:roundingDocument');
 		$roundingDocument->appendChild($xml->createTextNode($this->getValue('roundingDocument')));
 		$summary->appendChild($roundingDocument);
