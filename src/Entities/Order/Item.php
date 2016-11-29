@@ -23,6 +23,7 @@ use MPospiech\PohodaSynchronization\Pohoda;
  * @method Item setDiscountPercentage(float $percentage)
  * @method Item setNote(string $note)
  * @method Item setCode(string $code)
+ * @method Item setUnitPrice(float $unitPrice)
  */
 class Item extends Entity
 {
@@ -59,6 +60,9 @@ class Item extends Entity
 
 	/** @var string:64 */
 	protected $code;
+
+	/** @var float */
+	protected $unitPrice = 0;
 
 	const VAT_NONE = 'none';
 	const VAT_HIGH = 'high';
@@ -100,7 +104,7 @@ class Item extends Entity
 		$orderItem = $xml->createElementNS($this->getXmlNamespace('ord'), 'ord:orderItem');
 		$xml->appendChild($orderItem);
 
-		$elements = ['text', 'quantity', 'delivered', 'unit', 'coefficient', 'payVat', 'discountPercentage', 'note', 'code'];
+		$elements = ['text', 'quantity', 'delivered', 'unit', 'coefficient', 'payVat', 'discountPercentage', 'note', 'code', 'rateVAT'];
 		foreach ($elements as $element) {
 			$value = $this->getValue($element);
 			if (!$value) {
@@ -117,6 +121,14 @@ class Item extends Entity
 			$homeCurrency = $xml->createElementNS($this->getXmlNamespace('ord'), 'ord:homeCurrency');
 			$value = $xml->createElementNS($this->getXmlNamespace('typ'), sprintf('typ:%s', $this->getValue('homeCurrency')));
 			$value->appendChild($xml->createTextNode($this->getValue('homeCurrencyValue')));
+			$homeCurrency->appendChild($value);
+			$orderItem->appendChild($homeCurrency);
+		}
+		// cena u polozky
+		else if ($this->unitPrice) {
+			$homeCurrency = $xml->createElementNS($this->getXmlNamespace('ord'), 'ord:homeCurrency');
+			$value = $xml->createElementNS($this->getXmlNamespace('typ'), sprintf('typ:%s', self::CURRENCY_UNIT));
+			$value->appendChild($xml->createTextNode($this->getValue('unitPrice')));
 			$homeCurrency->appendChild($value);
 			$orderItem->appendChild($homeCurrency);
 		}
